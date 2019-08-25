@@ -15,11 +15,26 @@ export class TableInfosComponent implements OnInit {
    * The Search query returned by the input
    */
   query: string;
+  /**
+   * The list of the items returned from the API
+   */
   itemsList: Array<TableInfos>;
+  /**
+   * A copy of the returned values wich we apply the filters
+   */
   items: Array<TableInfos>;
+  /**
+   * The item with highest "Hours studied" value
+   */
   highestHoursItem;
+  /**
+   * The item with lowesst "Hours studied" value
+   */
   lowestHoursItem;
 
+  /**
+   * @internal
+   */
   constructor(
     private tableInfoService: TableInfoService,
   ) {
@@ -32,10 +47,16 @@ export class TableInfosComponent implements OnInit {
     });
   }
 
+  /**
+   * @internal
+   */
   ngOnInit() {
     this.items = this.itemsList;
   }
 
+  /**
+   * Get the items with the lowest and highest "Hours studied" value
+   */
   listLowHighHours() {
     this.sortData({
       active: 'hours_studied',
@@ -45,6 +66,10 @@ export class TableInfosComponent implements OnInit {
     this.highestHoursItem = this.items[this.items.length - 1];
   }
 
+  /**
+   * Filter the items based on the string value from input
+   * @param value The search query from input
+   */
   filter(value: string) {
     this.items = this.itemsList.filter(item => {
       return Object.values(item).some(val =>
@@ -54,6 +79,11 @@ export class TableInfosComponent implements OnInit {
     this.listLowHighHours();
   }
 
+  /**
+   * Sort the items array
+   * @param sort The object to sort
+   * @param updateValues If is true, update the items based on sort
+   */
   sortData(sort: object, updateValues = true) {
     const data = this.items.slice();
     if (!sort['active'] || sort['direction'] === '') {
@@ -80,6 +110,12 @@ export class TableInfosComponent implements OnInit {
     });
   }
 
+  /**
+   * An util function that compares two values
+   * @param a the first value to compare
+   * @param b the second value to compare
+   * @param isAsc define if the order is 'asc' or 'desc'
+   */
   compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }

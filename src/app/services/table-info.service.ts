@@ -9,11 +9,18 @@ import { Observable } from 'rxjs';
 })
 export class TableInfoService {
 
+  /**
+   * @internal
+   */
   constructor(
     private http: HttpClient,
   ) { }
 
-  getInfos(url): Observable<TableInfos[]> {
+  /**
+   * Get the content from the json API
+   * @param url The url to fetch data
+   */
+  getInfos(url: string): Observable<TableInfos[]> {
     return this.http.get<TableInfos[]>(url);
   }
 }
