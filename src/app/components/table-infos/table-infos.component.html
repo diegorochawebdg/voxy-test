@@ -1,0 +1,27 @@
+<div class="internal-search">
+  <div class="internal-search__form-group form-group">
+    <label class="internal-search__label" for="internal-search-input">Filter:</label>
+    <input (input)="filter(searchText)" [(ngModel)]="searchText" type="text" class="internal-search__input form-control" id="internal-search-input" placeholder="Type your text to filter">
+  </div>
+</div>
+
+<div class="table">
+  <table class="table__table">
+    <thead>
+      <th>E-mail</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Primary Group</th>
+      <th>Phone number</th>
+      <th>Hours Studied</th>
+    </thead>
+    <tr *ngFor="let tableItem of items">
+      <td>{{ tableItem.email | filter: searchText }}</td>
+      <td>{{ tableItem.name.first | filter: searchText }}</td>
+      <td>{{ tableItem.name.last | filter: searchText }}</td>
+      <td>{{ tableItem.primary_group | filter: searchText }}</td>
+      <td>{{ tableItem.phone | filter: searchText }}</td>
+      <td>{{ tableItem.hours_studied | filter: searchText }}</td>
+    </tr>
+  </table>
+</div>
