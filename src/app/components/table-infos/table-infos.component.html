@@ -1,19 +1,29 @@
 <div class="internal-search">
   <div class="internal-search__form-group form-group">
-    <label class="internal-search__label" for="internal-search-input">Filter:</label>
     <input (input)="filter(searchText)" [(ngModel)]="searchText" type="text" class="internal-search__input form-control" id="internal-search-input" placeholder="Type your text to filter">
   </div>
 </div>
 
-<div class="table">
-  <table class="table__table">
-    <thead>
-      <th>E-mail</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Primary Group</th>
-      <th>Phone number</th>
-      <th>Hours Studied</th>
+<div class="users-list" *ngIf="lowestHoursItem && highestHoursItem">
+  <ul class="users-list__list">
+    <li>
+      <strong>Person with low hours studied:</strong> {{ lowestHoursItem.name.first }} {{ lowestHoursItem.name.last }} - {{ lowestHoursItem.hours_studied }}
+    </li>
+    <li class="users-list__item">
+        <strong>Person with more hours studied:</strong> {{ highestHoursItem.name.first }} {{ highestHoursItem.name.last }} - {{ highestHoursItem.hours_studied }}
+    </li>
+  </ul>
+</div>
+
+<div class="table-infos">
+  <table matSort (matSortChange)="sortData($event)" class="table-infos__table table table-hover">
+    <thead class="thead-light">
+      <th mat-sort-header="email">E-mail</th>
+      <th mat-sort-header="first">First Name</th>
+      <th mat-sort-header="last">Last Name</th>
+      <th mat-sort-header="primary_group">Primary Group</th>
+      <th mat-sort-header="phone">Phone number</th>
+      <th mat-sort-header="hours_studied">Hours Studied</th>
     </thead>
     <tr *ngFor="let tableItem of items">
       <td>{{ tableItem.email | filter: searchText }}</td>
